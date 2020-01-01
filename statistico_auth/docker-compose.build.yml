@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+
+  nginx:
+    build:
+      dockerfile: ./docker/nginx/Dockerfile
+      context: ./
+    ports:
+      - "80"
+    links:
+      - api
+
+  api:
+    build:
+      dockerfile: ./docker/api/Dockerfile
+      context: ./
+    volumes:
+      - .:/opt
+
+
