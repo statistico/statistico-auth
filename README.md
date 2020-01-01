@@ -1,1 +1,1 @@
-# statistico-auth
+# Statistico Auth
