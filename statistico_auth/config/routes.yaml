@@ -4,8 +4,8 @@
 
 index:
   path: /
-  controller: App\Application\Http\Controller\HomeController
+  controller: Statistico\Auth\Application\Http\Controller\HomeController
 
 healthcheck:
   path: /healthcheck
-  controller: App\Application\Http\Controller\HealthCheckController
+  controller: Statistico\Auth\Application\Http\Controller\HealthCheckController
