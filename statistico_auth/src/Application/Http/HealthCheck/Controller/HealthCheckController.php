@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistico\Auth\Application\Http\Controller;
+namespace Statistico\Auth\Application\Http\HealthCheck\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
