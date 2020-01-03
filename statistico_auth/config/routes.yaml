@@ -7,5 +7,5 @@ index:
   controller: App\Application\Http\Controller\HomeController
 
 healthcheck:
-  path: /api/v1/healthcheck
+  path: /healthcheck
   controller: App\Application\Http\Controller\HealthCheckController
