@@ -3,6 +3,7 @@
 namespace Statistico\Auth\Domain\User;
 
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 use Statistico\Auth\Framework\Entity\Timestamps;
 
 class UserTest extends TestCase
@@ -14,8 +15,11 @@ class UserTest extends TestCase
             new \DateTimeImmutable('2020-02-03T00:00:00')
         );
 
-        $user = new User('Joe', 'Sweeny', 'joe@statistico.io', $timestamps);
+        $id = Uuid::fromString('723b2b66-c1fb-4292-95de-21bb0aed9745');
 
+        $user = new User($id,'Joe', 'Sweeny', 'joe@statistico.io', $timestamps);
+
+        $this->assertEquals($id, $user->getId());
         $this->assertEquals('Joe', $user->getFirstName());
         $this->assertEquals('Sweeny', $user->getLastName());
         $this->assertEquals('joe@statistico.io', $user->getEmail());
