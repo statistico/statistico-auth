@@ -19,9 +19,12 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    Statistico\Auth\Application\Http\Controller\:
-        resource: '../src/Application/Http/Controller'
+    Statistico\Auth\Application\Http\HealthCheck\Controller\:
+        resource: '../src/Application/Http/HealthCheck/Controller'
         tags: ['controller.service_arguments']
 
+    Statistico\Auth\Application\Http\:
+        resource: '../src/Application/Http'
+        tags: ['controller.service_arguments']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
