@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Http\Controller;
+namespace Statistico\Auth\Application\Http\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
