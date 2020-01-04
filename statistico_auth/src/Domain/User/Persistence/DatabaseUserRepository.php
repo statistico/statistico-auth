@@ -22,25 +22,36 @@ class DatabaseUserRepository implements UserRepository
 
     public function exists(Uuid $id): bool
     {
-        $query = $this->userTable()->where('id = ?')->setParameter(0, $id->getBytes());
+//        $query = $this->userTable()->where('id = ?')->setParameter(0, $id->getBytes());
 
-        return true;
+        return 'Hello World';
     }
 
     public function insert(User $user): void
     {
-        // TODO: Implement insert() method.
+        $query = $this->connection->createQueryBuilder()
+            ->insert('user')
+            ->values([
+               'id' => $user->getId()->getBytes(),
+               'first_name' => $user->getFirstName(),
+               'last_name' => $user->getLastName(),
+               'email' => $user->getEmail(),
+               'created_at' => 11111111,
+               'updated_at' => 11111111,
+            ]);
+
+        $query->execute();
     }
 
-    /**
-     * @param Uuid $id
-     * @return User
-     * @throws NotFoundException
-     */
-    public function getById(Uuid $id): User
-    {
-        // TODO: Implement getById() method.
-    }
+//    /**
+//     * @param Uuid $id
+//     * @return User
+//     * @throws NotFoundException
+//     */
+//    public function getById(Uuid $id): User
+//    {
+//        // TODO: Implement getById() method.
+//    }
 
     private function userTable(): QueryBuilder
     {

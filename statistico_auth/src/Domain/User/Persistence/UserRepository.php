@@ -10,11 +10,11 @@ interface UserRepository
 {
     public function exists(Uuid $id): bool;
     public function insert(User $user): void;
-
-    /**
-     * @param Uuid $id
-     * @return User
-     * @throws NotFoundException
-     */
-    public function getById(Uuid $id): User;
+//
+//    /**
+//     * @param Uuid $id
+//     * @return User
+//     * @throws NotFoundException
+//     */
+//    public function getById(Uuid $id): User;
 }

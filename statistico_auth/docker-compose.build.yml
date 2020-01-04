@@ -33,4 +33,15 @@ services:
     links:
       - mysql
 
+  test:
+    build:
+      dockerfile: ./docker/api/Dockerfile
+      context: ./
+    volumes:
+      - .:/opt
+    environment:
+      - DATABASE_URL="sqlite:///:memory:"
+    links:
+      - mysql
+
 
