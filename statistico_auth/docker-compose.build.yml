@@ -1,6 +1,18 @@
 version: '3.3'
 services:
 
+  mysql:
+    image: 'mysql:5.6'
+    ports:
+      - '3306'
+    volumes:
+      - .:/opt
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=dev
+      - MYSQL_PASSWORD=password
+
   nginx:
     build:
       dockerfile: ./docker/nginx/Dockerfile
@@ -14,6 +26,8 @@ services:
     build:
       dockerfile: ./docker/api/Dockerfile
       context: ./
+    environment:
+      - DATABASE_URL=mysql://dev:password@mysql:3306/app
     volumes:
       - .:/opt
 
