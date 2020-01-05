@@ -23,9 +23,9 @@ class UserRepositoryIntegrationTest extends KernelTestCase
 
     public function setUp(): void
     {
-        $kernel = self::bootKernel();
-        $this->repository = $kernel->getContainer()->get(UserRepository::class);
-        $this->connection = $kernel->getContainer()->get(Connection::class)->createQueryBuilder();
+        static::bootKernel();
+        $this->repository = self::$container->get(UserRepository::class);
+        $this->connection = self::$container->get(Connection::class)->createQueryBuilder();
     }
 
     public function test_insert_increases_table_count()
@@ -35,14 +35,14 @@ class UserRepositoryIntegrationTest extends KernelTestCase
             new \DateTimeImmutable('2020-02-03T00:00:00')
         );
 
-        $id = Uuid::fromString('723b2b66-c1fb-4292-95de-21bb0aed9745');
+        $id = Uuid::uuid4();
 
-        $user = new User($id,'Joe', 'Sweeny', 'joe@statistico.io', $timestamps);
+        $user = new User($id,'Joe', 'Sweeny', 'joe', $timestamps);
 
         $this->repository->insert($user);
 
-        $total = $this->connection->select('*')->from('user')->execute();
+        $statement = $this->connection->select('*')->from('user')->execute();
 
-        dd($total);
+        dd($statement->fetchAll());
     }
 }

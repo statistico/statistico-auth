@@ -2,13 +2,13 @@
 
 namespace Statistico\Auth\Domain\User;
 
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Statistico\Auth\Framework\Entity\Timestamps;
 
 class User
 {
     /**
-     * @var Uuid
+     * @var UuidInterface
      */
     private $id;
     /**
@@ -29,7 +29,7 @@ class User
     private $timestamps;
 
     public function __construct(
-        Uuid $id,
+        UuidInterface $id,
         string $firstName,
         string $lastName,
         string $email,
@@ -42,7 +42,7 @@ class User
         $this->timestamps = $timestamps;
     }
 
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }
