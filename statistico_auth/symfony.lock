@@ -1,4 +1,7 @@
 {
+    "cakephp/chronos": {
+        "version": "2.0.1"
+    },
     "dama/doctrine-test-bundle": {
         "version": "4.0",
         "recipe": {

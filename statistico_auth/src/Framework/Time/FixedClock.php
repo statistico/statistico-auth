@@ -1,6 +1,6 @@
 <?php
 
-namespace Opia\Lib\Time;
+namespace Statistico\Auth\Framework\Time;
 
 use Cake\Chronos\Chronos;
 use DateTimeImmutable;

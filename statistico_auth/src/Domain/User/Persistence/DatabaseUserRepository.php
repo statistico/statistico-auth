@@ -7,6 +7,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Ramsey\Uuid\Uuid;
 use Statistico\Auth\Domain\User\User;
 use Statistico\Auth\Framework\Exception\NotFoundException;
+use Statistico\Auth\Framework\Time\Clock;
 
 class DatabaseUserRepository implements UserRepository
 {
@@ -14,10 +15,15 @@ class DatabaseUserRepository implements UserRepository
      * @var Connection
      */
     private $connection;
+    /**
+     * @var Clock
+     */
+    private $clock;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, Clock $clock)
     {
         $this->connection = $connection;
+        $this->clock = $clock;
     }
 
     public function exists(Uuid $id): bool
@@ -37,14 +43,16 @@ class DatabaseUserRepository implements UserRepository
                'last_name' => ':last',
                'email' => ':email',
                'password' => ':password',
-               'created_at' => 11111111,
-               'updated_at' => 11111111,
+               'created_at' => ':created',
+               'updated_at' => ':updated',
             ])
             ->setParameter(':id', $user->getId()->getBytes())
             ->setParameter(':first', $user->getFirstName())
             ->setParameter(':last', $user->getLastName())
             ->setParameter(':email', $user->getEmail())
-            ->setParameter(':password', 'password');
+            ->setParameter(':password', 'password')
+            ->setParameter(':created', $this->clock->now()->getTimestamp())
+            ->setParameter(':updated', $this->clock->now()->getTimestamp());
 
         $query->execute();
     }

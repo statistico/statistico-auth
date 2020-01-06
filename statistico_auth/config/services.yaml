@@ -31,3 +31,7 @@ services:
     Statistico\Auth\Domain\User\Persistence\UserRepository:
         alias: 'Statistico\Auth\Domain\User\Persistence\DatabaseUserRepository'
         public: true
+
+    Statistico\Auth\Framework\Time\Clock:
+        alias: 'Statistico\Auth\Framework\Time\SystemClock'
+        public: true
