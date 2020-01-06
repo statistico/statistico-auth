@@ -32,19 +32,19 @@ class DatabaseUserRepository implements UserRepository
         $query = $this->connection->createQueryBuilder()
             ->insert('user')
             ->values([
-               'id' => '?',
-               'first_name' => '?',
-               'last_name' => '?',
-               'email' => '?',
-               'password' => '?',
+               'id' => ':id',
+               'first_name' => ':first',
+               'last_name' => ':last',
+               'email' => ':email',
+               'password' => ':password',
                'created_at' => 11111111,
                'updated_at' => 11111111,
             ])
-            ->setParameter(0, $user->getId()->getBytes())
-            ->setParameter(1, $user->getFirstName())
-            ->setParameter(2, $user->getLastName())
-            ->setParameter(3, $user->getEmail())
-            ->setParameter(4, 'password');
+            ->setParameter(':id', $user->getId()->getBytes())
+            ->setParameter(':first', $user->getFirstName())
+            ->setParameter(':last', $user->getLastName())
+            ->setParameter(':email', $user->getEmail())
+            ->setParameter(':password', 'password');
 
         $query->execute();
     }

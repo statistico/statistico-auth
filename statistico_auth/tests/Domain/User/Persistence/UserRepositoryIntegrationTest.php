@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserRepositoryIntegrationTest extends KernelTestCase
 {
-
     /**
      * @var UserRepository
      */
@@ -35,14 +34,14 @@ class UserRepositoryIntegrationTest extends KernelTestCase
             new \DateTimeImmutable('2020-02-03T00:00:00')
         );
 
-        $id = Uuid::uuid4();
+        for ($i = 1; $i < 4; $i++) {
+            $user = new User(Uuid::uuid4(),'Joe', 'Sweeny', 'joe', $timestamps);
 
-        $user = new User($id,'Joe', 'Sweeny', 'joe', $timestamps);
+            $this->repository->insert($user);
 
-        $this->repository->insert($user);
+            $statement = $this->connection->select('*')->from('user')->execute();
 
-        $statement = $this->connection->select('*')->from('user')->execute();
-
-        dd($statement->fetchAll());
+            $this->assertEquals($i, $statement->rowCount());
+        }
     }
 }
