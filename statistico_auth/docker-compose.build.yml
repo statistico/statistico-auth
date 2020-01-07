@@ -40,7 +40,6 @@ services:
     volumes:
       - .:/opt
     environment:
-#      DATABASE_URL: "sqlite:///:memory:"
       - DATABASE_URL=mysql://dev:password@mysql:3306/app?serverVersion=5.7
     links:
       - mysql
