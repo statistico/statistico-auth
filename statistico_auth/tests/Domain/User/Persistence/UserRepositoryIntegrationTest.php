@@ -7,6 +7,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Ramsey\Uuid\Uuid;
 use Statistico\Auth\Domain\User\User;
 use Statistico\Auth\Framework\Entity\Timestamps;
+use Statistico\Auth\Framework\Security\PasswordHash;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserRepositoryIntegrationTest extends KernelTestCase
@@ -35,7 +36,14 @@ class UserRepositoryIntegrationTest extends KernelTestCase
         );
 
         for ($i = 1; $i < 4; $i++) {
-            $user = new User(Uuid::uuid4(),'Joe', 'Sweeny', 'joe', $timestamps);
+            $user = new User(
+                Uuid::uuid4(),
+                'Joe',
+                'Sweeny',
+                'joe@statistico.io',
+                PasswordHash::createFromRaw('password'),
+                $timestamps
+            );
 
             $this->repository->insert($user);
 
