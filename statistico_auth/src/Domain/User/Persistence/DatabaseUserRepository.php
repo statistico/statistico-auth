@@ -3,14 +3,19 @@
 namespace Statistico\Auth\Domain\User\Persistence;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Statistico\Auth\Domain\User\User;
+use Statistico\Auth\Framework\Entity\Timestamps;
 use Statistico\Auth\Framework\Exception\NotFoundException;
+use Statistico\Auth\Framework\Security\PasswordHash;
 use Statistico\Auth\Framework\Time\Clock;
+use Statistico\Auth\Framework\Time\ParsesTime;
 
 class DatabaseUserRepository implements UserRepository
 {
+    use ParsesTime;
+
     /**
      * @var Connection
      */
@@ -24,13 +29,6 @@ class DatabaseUserRepository implements UserRepository
     {
         $this->connection = $connection;
         $this->clock = $clock;
-    }
-
-    public function exists(Uuid $id): bool
-    {
-//        $query = $this->userTable()->where('id = ?')->setParameter(0, $id->getBytes());
-
-        return 'Hello World';
     }
 
     public function insert(User $user): void
@@ -57,18 +55,52 @@ class DatabaseUserRepository implements UserRepository
         $query->execute();
     }
 
-//    /**
-//     * @param Uuid $id
-//     * @return User
-//     * @throws NotFoundException
-//     */
-//    public function getById(Uuid $id): User
-//    {
-//        // TODO: Implement getById() method.
-//    }
-
-    private function userTable(): QueryBuilder
+    public function getById(UuidInterface $id): User
     {
-        return $this->connection->createQueryBuilder()->from('user');
+        $row = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('user')
+            ->where('id = :id')
+            ->setParameter(':id', $id->getBytes())
+            ->execute()
+            ->fetch();
+
+        if (!$row) {
+            throw new NotFoundException("User with ID {$id} does not exist");
+        }
+
+        return $this->hydrateUserFromRow((object) $row);
+    }
+
+    public function existsWithEmail(string $email): bool
+    {
+        $row = $this->connection->createQueryBuilder()
+            ->select('id')
+            ->from('user')
+            ->where('email = :email')
+            ->setParameter(':email', $email)
+            ->execute()
+            ->fetch();
+
+        return $row !== false;
+    }
+
+    private function hydrateUserFromRow(object $row): User
+    {
+        $timestamps = new Timestamps(
+            $this->fromUnixTimestamp($row->created_at),
+            $this->fromUnixTimestamp($row->updated_at)
+        );
+
+        $user = new User(
+            Uuid::fromBytes($row->id),
+            $row->first_name,
+            $row->last_name,
+            $row->email,
+            new PasswordHash($row->password),
+            $timestamps
+        );
+
+        return $user;
     }
 }

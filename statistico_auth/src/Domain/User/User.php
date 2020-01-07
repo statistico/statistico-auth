@@ -39,7 +39,7 @@ class User
         string $lastName,
         string $email,
         PasswordHash $passwordHash,
-        Timestamps $timestamps
+        ?Timestamps $timestamps
     ) {
         $this->id = $id;
         $this->firstName = $firstName;
@@ -74,13 +74,13 @@ class User
         return $this->passwordHash;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->timestamps->getCreated();
+        return $this->timestamps !== null ? $this->timestamps->getCreated() : null;
     }
 
-    public function getUpdatedAt(): \DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->timestamps->getUpdated();
+        return $this->timestamps !== null ? $this->timestamps->getUpdated() : null;
     }
 }
