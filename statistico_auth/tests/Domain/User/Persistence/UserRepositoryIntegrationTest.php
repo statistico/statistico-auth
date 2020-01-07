@@ -70,6 +70,7 @@ class UserRepositoryIntegrationTest extends KernelTestCase
         $this->assertEquals('Joe', $fetched->getFirstName());
         $this->assertEquals('Sweeny', $fetched->getLastName());
         $this->assertEquals('joe@statistico.io', $fetched->getEmail());
+        $this->assertTrue($fetched->getPasswordHash()->verify('password'));
         $this->assertEquals(new \DateTimeImmutable('2020-02-03T00:00:00'), $fetched->getCreatedAt());
         $this->assertEquals(new \DateTimeImmutable('2020-02-03T00:00:00'), $fetched->getUpdatedAt());
     }

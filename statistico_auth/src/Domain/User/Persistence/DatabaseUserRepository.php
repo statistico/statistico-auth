@@ -48,7 +48,7 @@ class DatabaseUserRepository implements UserRepository
             ->setParameter(':first', $user->getFirstName())
             ->setParameter(':last', $user->getLastName())
             ->setParameter(':email', $user->getEmail())
-            ->setParameter(':password', 'password')
+            ->setParameter(':password', $user->getPasswordHash()->__toString())
             ->setParameter(':created', $this->clock->now()->getTimestamp())
             ->setParameter(':updated', $this->clock->now()->getTimestamp());
 
