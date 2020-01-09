@@ -2,6 +2,7 @@ FROM php:7.3-fpm
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        php-xml
         supervisor \
         nginx \
         libcurl4-gnutls-dev \
@@ -19,7 +20,7 @@ COPY ./docker/api/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/api/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/api/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/api/start.sh /start.sh
-COPY ./env /opt/.env/
+COPY ./.env /opt/.env/
 COPY ./src /opt/src/
 COPY ./bin /opt/bin/
 COPY ./vendor /opt/vendor/
