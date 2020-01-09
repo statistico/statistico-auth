@@ -2,13 +2,14 @@
 
 namespace Statistico\Auth\Domain\User;
 
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Statistico\Auth\Framework\Entity\Timestamps;
+use Statistico\Auth\Framework\Security\PasswordHash;
 
 class User
 {
     /**
-     * @var Uuid
+     * @var UuidInterface
      */
     private $id;
     /**
@@ -27,22 +28,28 @@ class User
      * @var Timestamps
      */
     private $timestamps;
+    /**
+     * @var PasswordHash
+     */
+    private $passwordHash;
 
     public function __construct(
-        Uuid $id,
+        UuidInterface $id,
         string $firstName,
         string $lastName,
         string $email,
-        Timestamps $timestamps
+        PasswordHash $passwordHash,
+        ?Timestamps $timestamps
     ) {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
+        $this->passwordHash = $passwordHash;
         $this->timestamps = $timestamps;
     }
 
-    public function getId(): Uuid
+    public function getId(): UuidInterface
     {
         return $this->id;
     }
@@ -62,13 +69,18 @@ class User
         return $this->email;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getPasswordHash(): PasswordHash
     {
-        return $this->timestamps->getCreated();
+        return $this->passwordHash;
     }
 
-    public function getUpdatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->timestamps->getUpdated();
+        return $this->timestamps !== null ? $this->timestamps->getCreated() : null;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->timestamps !== null ? $this->timestamps->getUpdated() : null;
     }
 }
