@@ -5,5 +5,7 @@ jobs:
     machine:
       image: circleci/classic:201711-01
 
-    run:
-      command: echo 'Hello'
+    steps:
+      - checkout
+        run:
+          command: echo 'Hello'
