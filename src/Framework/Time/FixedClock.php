@@ -36,9 +36,10 @@ class FixedClock implements Clock
     /**
      * Travel to the given datetime.
      *
-     * @param DateTimeImmutable $time
+     * @param \DateTimeImmutable $time
+     * @return void
      */
-    public function travelTo(DateTimeImmutable $time)
+    public function travelTo(\DateTimeImmutable $time): void
     {
         $this->currentDatetime = $time;
     }

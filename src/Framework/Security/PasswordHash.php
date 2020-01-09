@@ -2,9 +2,15 @@
 
 namespace Statistico\Auth\Framework\Security;
 
-class PasswordHash
+final class PasswordHash
 {
+    /**
+     * @var int
+     */
     private static $algo = PASSWORD_BCRYPT;
+    /**
+     * @var array|array[]
+     */
     private static $algoOptions = [];
     /**
      * @var string
@@ -45,7 +51,13 @@ class PasswordHash
             throw new \InvalidArgumentException('Password cannot be empty');
         }
 
-        return new static(password_hash($rawPassword, static::$algo, static::$algoOptions));
+        $hash = password_hash($rawPassword, static::$algo, static::$algoOptions);
+
+        if ($hash === false) {
+            throw new \RuntimeException("Error creating password hash");
+        }
+
+        return new static($hash);
     }
 
     public function __toString()

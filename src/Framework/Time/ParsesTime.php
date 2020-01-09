@@ -6,7 +6,7 @@ trait ParsesTime
 {
     public function fromUnixTimestamp(int $time): \DateTimeImmutable
     {
-        $parsed = \DateTimeImmutable::createFromFormat('U', $time);
+        $parsed = \DateTimeImmutable::createFromFormat('U', (string) $time);
 
         if ($parsed === false) {
             throw new \RuntimeException("Date {$time} is not a valid unix timestamp");

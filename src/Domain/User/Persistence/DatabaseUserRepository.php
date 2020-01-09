@@ -3,6 +3,7 @@
 namespace Statistico\Auth\Domain\User\Persistence;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Statement;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Statistico\Auth\Domain\User\User;
@@ -57,16 +58,21 @@ class DatabaseUserRepository implements UserRepository
 
     public function getById(UuidInterface $id): User
     {
-        $row = $this->connection->createQueryBuilder()
+        $executed = $this->connection->createQueryBuilder()
             ->select('*')
             ->from('user')
             ->where('id = :id')
             ->setParameter(':id', $id->getBytes())
-            ->execute()
-            ->fetch();
+            ->execute();
 
-        if (!$row) {
-            throw new NotFoundException("User with ID {$id} does not exist");
+        if (!$executed instanceof Statement) {
+            throw new NotFoundException("User with ID {$id->toString()} does not exist");
+        }
+
+        $row = $executed->fetch();
+
+        if ($row === false) {
+            throw new NotFoundException("User with ID {$id->toString()} does not exist");
         }
 
         return $this->hydrateUserFromRow((object) $row);
@@ -74,18 +80,21 @@ class DatabaseUserRepository implements UserRepository
 
     public function existsWithEmail(string $email): bool
     {
-        $row = $this->connection->createQueryBuilder()
+        $executed = $this->connection->createQueryBuilder()
             ->select('id')
             ->from('user')
             ->where('email = :email')
             ->setParameter(':email', $email)
-            ->execute()
-            ->fetch();
+            ->execute();
 
-        return $row !== false;
+        if (!$executed instanceof Statement) {
+            return false;
+        }
+
+        return $executed->fetch() !== false;
     }
 
-    private function hydrateUserFromRow(object $row): User
+    private function hydrateUserFromRow(\stdClass $row): User
     {
         $timestamps = new Timestamps(
             $this->fromUnixTimestamp($row->created_at),
