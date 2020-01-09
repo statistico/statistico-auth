@@ -48,5 +48,3 @@ services:
     <<: *api
     restart: on-failure
     command: /opt/bin/migrate
-
-
