@@ -20,7 +20,7 @@ jobs:
           name: Build Release Image
           command: |
             composer install --ignore-platform-reqs --no-dev --optimize-autoloader
-            docker-compose -f docker-compose.yml up -d --build
+            docker-compose -f docker-compose.build.yml up -d --build
 
       - run:
           name: Test Release Image
