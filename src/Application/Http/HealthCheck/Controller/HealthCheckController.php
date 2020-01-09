@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HealthCheckController
 {
-    public function __invoke()
+    public function __invoke(): Response
     {
         return new Response('Healthcheck OK');
     }
