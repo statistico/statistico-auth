@@ -2,7 +2,6 @@ FROM php:7.3-fpm
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        php-xml
         supervisor \
         nginx \
         libcurl4-gnutls-dev \
