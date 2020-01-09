@@ -4,7 +4,7 @@ services:
   nginx:
     build:
       dockerfile: ./docker/nginx/Dockerfile
-      context: .
+      context: ./
     ports:
       - "80"
     links:
@@ -13,7 +13,7 @@ services:
   api:
     build:
       dockerfile: ./docker/api/Dockerfile
-      context: .
+      context: ./
     volumes:
       - .:/opt
 
