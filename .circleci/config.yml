@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/statistico-auth
     machine:
-      image: circleci/classic:201711-01
+      image: ubuntu-1604:201903-01
 
     steps:
       - checkout
