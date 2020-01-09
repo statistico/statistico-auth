@@ -3,10 +3,19 @@ jobs:
   build:
     working_directory: ~/statistico-auth
     machine:
-      image: circleci/php:7.3.9-fpm
+      image: circleci/classic:latest
 
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get update
+            sudo add-apt-repository ppa:ondrej/php
+            sudo apt-get update
+            sudo apt-get install -y php7.3
+            curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+
       - run:
           name: Build Release Image
           command: |
