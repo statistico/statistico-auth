@@ -21,6 +21,7 @@ COPY ./docker/api/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/api/start.sh /start.sh
 COPY ./src /opt/src/
 COPY ./bin /opt/bin/
+COPY ./vendor /opt/vendor/
 COPY ./config /opt/config/
 COPY ./public /opt/public/
 
