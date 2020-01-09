@@ -19,8 +19,11 @@ COPY ./docker/api/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/api/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/api/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/api/start.sh /start.sh
+COPY ./docker/wait-for-it.sh /opt//docker/wait-for-it.sh
+COPY ./.env /opt/.env/
 COPY ./src /opt/src/
 COPY ./bin /opt/bin/
+COPY ./vendor /opt/vendor/
 COPY ./config /opt/config/
 COPY ./public /opt/public/
 
