@@ -29,9 +29,6 @@ paths:
                 password:
                   type: string
                   example: secret-p@ssword!
-                passwordConfirmation:
-                  type: string
-                  example: secret-p@ssword!
       responses:
         201:
           description: A user resource is successfully created

@@ -30,10 +30,10 @@ class UserService
 
     /**
      * @param UserCommand $command
-     * @return UuidInterface
+     * @return string
      * @throws UserCreationException
      */
-    public function register(UserCommand $command): UuidInterface
+    public function register(UserCommand $command): string
     {
         if ($this->userRepository->existsWithEmail($command->getEmail())) {
             throw new UserCreationException("User already exists with the email provided");
@@ -49,7 +49,7 @@ class UserService
 
         $this->userRepository->insert($user);
 
-        return $user->getId();
+        return $user->getId()->toString();
     }
 
     /**

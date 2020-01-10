@@ -47,7 +47,7 @@ class UserServiceTest extends TestCase
 
         $id = $this->service->register($command);
 
-        $this->assertInstanceOf(UuidInterface::class, $id);
+        $this->assertEquals(36, strlen($id));
     }
 
     public function test_register_throws_UserCreationException_if_user_exists_with_email_provided()
