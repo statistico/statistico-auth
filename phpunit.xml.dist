@@ -15,6 +15,10 @@
     </php>
 
     <testsuites>
+        <testsuite name="Boundary Layer">
+            <directory>./tests/Boundary</directory>
+        </testsuite>
+
         <testsuite name="Domain Layer">
             <directory>./tests/Domain</directory>
         </testsuite>
