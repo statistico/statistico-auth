@@ -6,7 +6,7 @@ use Statistico\Auth\Domain\User\User;
 
 class UserPresenter
 {
-    public function userToDto(User $user): object
+    public function userToDto(User $user): \stdClass
     {
         return (object) [
             'id' => $user->getId()->toString(),

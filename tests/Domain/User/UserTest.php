@@ -18,7 +18,14 @@ class UserTest extends TestCase
 
         $id = Uuid::fromString('723b2b66-c1fb-4292-95de-21bb0aed9745');
 
-        $user = new User($id,'Joe', 'Sweeny', 'joe@statistico.io', PasswordHash::createFromRaw('password'), $timestamps);
+        $user = new User(
+            $id,
+            'Joe',
+            'Sweeny',
+            'joe@statistico.io',
+            PasswordHash::createFromRaw('password'),
+            $timestamps
+        );
 
         $this->assertEquals($id, $user->getId());
         $this->assertEquals('Joe', $user->getFirstName());
