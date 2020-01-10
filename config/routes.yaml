@@ -9,3 +9,8 @@ index:
 healthcheck:
   path: /healthcheck
   controller: Statistico\Auth\Application\Http\HealthCheck\Controller\HealthCheckController
+
+api:
+  path: /api/v1/user
+  controller: Statistico\Auth\Application\Http\ApiV1\User\Controller\PostController
+  methods: POST
