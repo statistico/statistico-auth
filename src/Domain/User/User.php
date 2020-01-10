@@ -39,7 +39,7 @@ class User
         string $lastName,
         string $email,
         PasswordHash $passwordHash,
-        ?Timestamps $timestamps
+        ?Timestamps $timestamps = null
     ) {
         $this->id = $id;
         $this->firstName = $firstName;
