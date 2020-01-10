@@ -30,7 +30,7 @@ class UserService
 
     /**
      * @param UserCommand $command
-     * @return UuidInterface
+     * @return string
      * @throws UserCreationException
      */
     public function register(UserCommand $command): string

@@ -2,6 +2,7 @@
 
 namespace Statistico\Auth\Application\Http\ApiV1\User\Controller;
 
+use Statistico\Auth\Application\Http\ApiV1\CreatesJsendResponses;
 use Statistico\Auth\Boundary\User\Exception\UserCreationException;
 use Statistico\Auth\Boundary\User\UserCommand;
 use Statistico\Auth\Boundary\User\UserService;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends AbstractController
 {
+    use CreatesJsendResponses;
+
     /**
      * @var UserService
      */
@@ -26,44 +29,22 @@ class PostController extends AbstractController
         $body = json_decode((string) $request->getContent());
 
         if (!$body) {
-            $response = [
-                'status' => 'fail',
-                'data' => [
-                    'errors' => [
-                        (object) [
-                            'message' => 'Request body provided is not in a valid format',
-                            'code' => 1,
-                        ]
-                    ]
-                ]
-            ];
-
-            return $this->json($response);
+            return $this->createFailResponse(['Request body provided is not in a valid format'], 400);
         }
 
         try {
             $command = $this->hydrateUserCommand($body);
 
-            $user = $this->userService->register($command);
+            $userId = $this->userService->register($command);
         } catch (\InvalidArgumentException | UserCreationException $e) {
-            $response = [
-                'status' => 'fail',
-                'data' => [
-                    'errors' => [
-                        (object) [
-                            'message' => "User creation failed with the message: {$e->getMessage()}",
-                            'code' => 1,
-                        ]
-                    ]
-                ]
-            ];
-
-            return $this->json($response);
+            return $this->createFailResponse(["User creation failed with the message: {$e->getMessage()}"], 422);
         }
 
-        $location = "{$this->getParameter('app.host')}/api/v1/user/{$user->toString()}";
+        $headers = [
+            'Location' => "{$this->getParameter('app.host')}/api/v1/user/{$userId}"
+        ];
 
-        return $this->json([], 201, ['Location' => $location]);
+        return $this->createSuccessResponse([], 201, $headers);
     }
 
     private function hydrateUserCommand(\stdClass $body): UserCommand
