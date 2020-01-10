@@ -2,11 +2,11 @@
 
 namespace Statistico\Auth\Boundary\User;
 
-use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\UuidInterface;
 use Statistico\Auth\Boundary\User\Exception\UserCreationException;
 use Statistico\Auth\Domain\User\Persistence\UserRepository;
 use Statistico\Auth\Domain\User\User;
+use Statistico\Auth\Framework\Exception\NotFoundException;
 use Statistico\Auth\Framework\Identity\GeneratesUuid;
 
 class UserService
@@ -14,18 +14,18 @@ class UserService
     use GeneratesUuid;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var UserPresenter
+     */
+    private $presenter;
 
-    public function __construct(UserRepository $userRepository, LoggerInterface $logger)
+    public function __construct(UserRepository $userRepository, UserPresenter $presenter)
     {
         $this->userRepository = $userRepository;
-        $this->logger = $logger;
+        $this->presenter = $presenter;
     }
 
     /**
@@ -50,5 +50,17 @@ class UserService
         $this->userRepository->insert($user);
 
         return $user->getId();
+    }
+
+    /**
+     * @param UuidInterface $id
+     * @return \stdClass
+     * @throws NotFoundException
+     */
+    public function getUserById(UuidInterface $id): \stdClass
+    {
+        $user = $this->userRepository->getById($id);
+
+        return $this->presenter->userToDto($user);
     }
 }
