@@ -6,11 +6,11 @@ use Statistico\Auth\Application\Http\ApiV1\CreatesJsendResponses;
 use Statistico\Auth\Boundary\User\Exception\UserCreationException;
 use Statistico\Auth\Boundary\User\UserCommand;
 use Statistico\Auth\Boundary\User\UserService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PostController extends AbstractController
+class PostController
 {
     use CreatesJsendResponses;
 
@@ -18,10 +18,15 @@ class PostController extends AbstractController
      * @var UserService
      */
     private $userService;
+    /**
+     * @var ContainerBagInterface
+     */
+    private $config;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ContainerBagInterface $config)
     {
         $this->userService = $userService;
+        $this->config = $config;
     }
 
     public function __invoke(Request $request): Response
@@ -41,7 +46,7 @@ class PostController extends AbstractController
         }
 
         $headers = [
-            'Location' => "{$this->getParameter('app.host')}/api/v1/user/{$userId}"
+            'Location' => "{$this->config->get('app.host')}/api/v1/user/{$userId}"
         ];
 
         return $this->createSuccessResponse([], 201, $headers);
