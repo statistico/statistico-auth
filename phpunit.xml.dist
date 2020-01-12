@@ -26,6 +26,10 @@
         <testsuite name="Domain Layer">
             <directory>./tests/Domain</directory>
         </testsuite>
+
+        <testsuite name="Framework">
+            <directory>./tests/Framework</directory>
+        </testsuite>
     </testsuites>
 
     <extensions>

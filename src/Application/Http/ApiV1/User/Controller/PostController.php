@@ -70,13 +70,11 @@ class PostController
             throw new \InvalidArgumentException("Required field 'email' is missing");
         }
 
-        $command = new UserCommand(
+        return new UserCommand(
             $body->firstName,
             $body->lastName,
             $body->email,
             $body->password,
         );
-
-        return $command;
     }
 }
