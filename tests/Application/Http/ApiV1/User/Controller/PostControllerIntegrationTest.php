@@ -4,11 +4,12 @@ namespace Statistico\Auth\Application\Http\ApiV1\User\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class PostControllerIntegrationTest extends KernelTestCase
 {
     /**
-     * @var \Symfony\Component\HttpKernel\KernelInterface
+     * @var KernelInterface
      */
     private $app;
 
