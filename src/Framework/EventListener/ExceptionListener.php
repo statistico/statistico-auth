@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistico\Auth\EventListener;
+namespace Statistico\Auth\Framework\EventListener;
 
 use Statistico\Auth\Application\Http\ApiV1\CreatesJsendResponses;
 use Statistico\Auth\Framework\Exception\NotAuthenticatedException;
@@ -22,9 +22,6 @@ class ExceptionListener
                 break;
             case NotAuthorizedException::class:
                 $response = $this->createFailResponse(['You are not authorized to perform that action'], 403);
-                break;
-            case NotFoundException::class:
-                $response = $this->createFailResponse(['Not found'], 404);
                 break;
             default:
                 $response = $this->createErrorResponse(['Server unavailable'], 500);
