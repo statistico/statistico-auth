@@ -7,6 +7,7 @@ use Ramsey\Uuid\Uuid;
 use Statistico\Auth\Application\Http\ApiV1\CreatesJsendResponses;
 use Statistico\Auth\Boundary\User\UserService;
 use Statistico\Auth\Framework\Exception\NotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 
 class GetController
 {
@@ -22,7 +23,7 @@ class GetController
         $this->service = $service;
     }
 
-    public function __invoke(string $id)
+    public function __invoke(string $id): Response
     {
         try {
             $userId = Uuid::fromString($id);
