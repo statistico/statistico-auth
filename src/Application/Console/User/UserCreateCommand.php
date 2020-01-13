@@ -25,7 +25,7 @@ class UserCreateCommand extends Command
         $this->service = $service;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Create a new user')
             ->addArgument('firstName', InputArgument::REQUIRED)
@@ -69,27 +69,30 @@ class UserCreateCommand extends Command
      */
     private function hydrateUserCommand(InputInterface $input): UserCommand
     {
-        if (!$input->getArgument('firstName')) {
-            throw new \InvalidArgumentException("Required field 'firstName' is missing");
+        $firstName = $input->getArgument('firstName');
+
+        if (!$firstName || !is_string($firstName)) {
+            throw new \InvalidArgumentException("Required field 'firstName' is missing or in an invalid format");
         }
 
-        if (!$input->getArgument('lastName')) {
-            throw new \InvalidArgumentException("Required field 'lastName' is missing");
+        $lastName = $input->getArgument('lastName');
+
+        if (!$lastName || !is_string($lastName)) {
+            throw new \InvalidArgumentException("Required field 'lastName' is missing or in an invalid format");
         }
 
-        if (!$input->getArgument('email')) {
-            throw new \InvalidArgumentException("Required field 'email' is missing");
+        $email = $input->getArgument('email');
+
+        if (!$email || !is_string($email)) {
+            throw new \InvalidArgumentException("Required field 'email' is missing or in an invalid format");
         }
 
-        if (!$input->getArgument('password')) {
-            throw new \InvalidArgumentException("Required field 'email' is missing");
+        $password = $input->getArgument('password');
+
+        if (!$password || !is_string($password)) {
+            throw new \InvalidArgumentException("Required field 'password' is missing or in an invalid format");
         }
 
-        return new UserCommand(
-            $input->getArgument('firstName'),
-            $input->getArgument('lastName'),
-            $input->getArgument('email'),
-            $input->getArgument('password'),
-        );
+        return new UserCommand($firstName, $lastName, $email, $password);
     }
 }
