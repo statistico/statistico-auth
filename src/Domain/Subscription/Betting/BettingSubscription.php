@@ -1,12 +1,16 @@
 <?php
 
-namespace Statistico\Auth\Domain\Subscription;
+namespace Statistico\Auth\Domain\Subscription\Betting;
 
 use Ramsey\Uuid\UuidInterface;
 use Statistico\Auth\Framework\Entity\Timestamps;
 
 class BettingSubscription
 {
+    /**
+     * @var UuidInterface
+     */
+    private $userId;
     /**
      * @var array|BetType[]
      */
@@ -16,15 +20,18 @@ class BettingSubscription
      */
     private $exclude;
     /**
-     * @var UuidInterface
-     */
-    private $userId;
-    /**
-     * @var Timestamps
+     * @var Timestamps|null
      */
     private $timestamps;
 
-    public function __construct(UuidInterface $userId, array $types, Exclude $exclude, Timestamps $timestamps)
+    /**
+     * BettingSubscription constructor.
+     * @param UuidInterface $userId
+     * @param array|BetType[] $types
+     * @param Exclude $exclude
+     * @param Timestamps|null $timestamps
+     */
+    public function __construct(UuidInterface $userId, array $types, Exclude $exclude, ?Timestamps $timestamps)
     {
         $this->userId = $userId;
         $this->types = $types;
@@ -49,9 +56,14 @@ class BettingSubscription
     {
         return $this->exclude;
     }
-    
-    public function getTimestamps(): Timestamps
+
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->timestamps;
+        return $this->timestamps !== null ? $this->timestamps->getCreated() : null;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->timestamps !== null ? $this->timestamps->getUpdated() : null;
     }
 }

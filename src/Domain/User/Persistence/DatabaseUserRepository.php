@@ -2,7 +2,8 @@
 
 namespace Statistico\Auth\Domain\User\Persistence;
 
-use Doctrine\DBAL\Connection;
+use
+    Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;

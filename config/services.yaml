@@ -48,6 +48,9 @@ services:
         alias: 'Statistico\Auth\Domain\User\Persistence\DatabaseUserRepository'
         public: true
 
+    Statistico\Auth\Domain\Subscription\Betting\Persistence\BettingSubscriptionRepository:
+        alias: 'Statistico\Auth\Domain\Subscription\Betting\Persistence\DatabaseBettingSubscriptionRepository'
+
     Statistico\Auth\Framework\Time\Clock:
         alias: 'Statistico\Auth\Framework\Time\SystemClock'
         public: true

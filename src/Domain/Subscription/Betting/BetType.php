@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistico\Auth\Domain\Subscription;
+namespace Statistico\Auth\Domain\Subscription\Betting;
 
 use MyCLabs\Enum\Enum;
 

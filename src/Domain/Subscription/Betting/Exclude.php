@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistico\Auth\Domain\Subscription;
+namespace Statistico\Auth\Domain\Subscription\Betting;
 
 class Exclude
 {
@@ -9,6 +9,10 @@ class Exclude
      */
     private $teams;
 
+    /**
+     * Exclude constructor.
+     * @param array|int[] $teams
+     */
     public function __construct(array $teams)
     {
         $this->teams = $teams;
