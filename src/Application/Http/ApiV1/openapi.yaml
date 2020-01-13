@@ -194,7 +194,7 @@ components:
               type: object
               properties:
                 teams:
-                  description: IDs of teams the user is has requested not to bet on
+                  description: IDs of teams the user has requested NOT to bet on
                   type: array
                   items:
                     type: integer
