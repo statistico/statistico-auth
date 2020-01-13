@@ -8,7 +8,7 @@ paths:
   /user:
     post:
       tags:
-        - Proposed
+        - User
       description: Create a new user resource
       requestBody:
         required: true
@@ -48,7 +48,7 @@ paths:
   /user/{id}:
     get:
       tags:
-        - Proposed
+        - User
       description: Retrieve a user resource
       parameters:
         - in: path
@@ -190,6 +190,15 @@ components:
                 type: string
                 enum:
                   - OVER_UNDER_25
+            exclude:
+              type: object
+              properties:
+                teams:
+                  description: IDs of teams the user is has requested not to bet on
+                  type: array
+                  items:
+                    type: integer
+                    example: 1234918
     StandardResponse:
       type: object
       required:
