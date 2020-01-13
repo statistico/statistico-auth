@@ -32,6 +32,11 @@ services:
         resource: '../src/Application/Http/ApiV1/User/Controller'
         tags: ['controller.service_arguments']
 
+    # Console commands
+    Statistico\Auth\Application\Console\User\UserCreateCommand:
+        tags:
+            - { name: 'console.command', command: 'user:create' }
+
     # Event Listeners
     Statistico\Auth\Framework\EventListener\ExceptionListener:
         tags:
