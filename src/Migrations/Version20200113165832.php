@@ -19,14 +19,7 @@ final class Version20200113165832 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $table = $schema->createTable('subscription_data');
-        $table->addColumn('user_id', 'binary')->setLength(16);
-        $table->addColumn('competitions', 'text')->setNotnull(false);
-        $table->addColumn('created_at', 'integer');
-        $table->addColumn('updated_at', 'integer');
-        $table->setPrimaryKey(['user_id']);
-
-        $table = $schema->createTable('subscription_betting');
+        $table = $schema->createTable('betting_subscription');
         $table->addColumn('user_id', 'binary')->setLength(16);
         $table->addColumn('type', 'text')->setNotnull(false);
         $table->addColumn('exclude_teams', 'text')->setNotnull(false);

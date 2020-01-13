@@ -80,11 +80,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardResponse'
 
-  /user/{id}/subscription:
+  /user/{id}/bet-subscription:
     put:
       tags:
         - Proposed
-      description: Create a subscription resource for a user
+      description: Create/update a bet subscription resource for a user
       parameters:
         - in: path
           name: id
@@ -97,18 +97,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Subscription'
+              type: object
+              properties:
+                type:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - OVER_UNDER_25
+                exclude:
+                  type: object
+                  properties:
+                    teams:
+                      description: IDs of teams the user has requested NOT to bet on
+                      type: array
+                      items:
+                        type: integer
+                        example: 1234918
       responses:
         201:
-          description: A subscription resource is successfully created
+          description: A bet subscription resource is successfully created
           headers:
             Location:
               schema:
                 type: string
-                example: https://auth.statistico.io/api/v1/user/a1c62ffd-627c-45bb-9790-a9fd2965d554/subscription
-              description: The url of the created user resource
+                example: https://auth.statistico.io/api/v1/user/a1c62ffd-627c-45bb-9790-a9fd2965d554/bet-subscription
+              description: The url of the created bet subscription resource
         204:
-          description: A subscription resource is successfully updated
+          description: A bet subscription resource is successfully updated
         default:
           description: Default non 200 response
           content:
@@ -118,7 +134,7 @@ paths:
     get:
       tags:
         - Proposed
-      description: Retrieve a subscription resource for a user
+      description: Retrieve a bet subscription resource for a user
       parameters:
         - in: path
           name: id
@@ -141,7 +157,7 @@ paths:
                     type: object
                     properties:
                       subscription:
-                        $ref: '#/components/schemas/Subscription'
+                        $ref: '#/components/schemas/BetSubscription'
         default:
           description: Default non 200 response
           content:
@@ -169,36 +185,30 @@ components:
           $ref: '#/components/schemas/Date'
         updated_at:
           $ref: '#/components/schemas/Date'
-    Subscription:
+    BetSubscription:
       type: object
       properties:
-        data:
+        userId:
+          $ref: '#/components/schemas/Uuid'
+        type:
+          type: array
+          items:
+            type: string
+            enum:
+              - OVER_UNDER_25
+        exclude:
           type: object
           properties:
-            competitions:
-              description: IDs of competition user is allowed to access
+            teams:
+              description: IDs of teams the user has requested NOT to bet on
               type: array
               items:
                 type: integer
                 example: 1234918
-        betting:
-          type: object
-          properties:
-            type:
-              type: array
-              items:
-                type: string
-                enum:
-                  - OVER_UNDER_25
-            exclude:
-              type: object
-              properties:
-                teams:
-                  description: IDs of teams the user has requested NOT to bet on
-                  type: array
-                  items:
-                    type: integer
-                    example: 1234918
+        created_at:
+          $ref: '#/components/schemas/Date'
+        updated_at:
+          $ref: '#/components/schemas/Date'
     StandardResponse:
       type: object
       required:
