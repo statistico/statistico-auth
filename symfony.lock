@@ -99,6 +99,9 @@
     "myclabs/deep-copy": {
         "version": "1.9.4"
     },
+    "myclabs/php-enum": {
+        "version": "1.7.2"
+    },
     "ocramius/package-versions": {
         "version": "1.5.1"
     },
