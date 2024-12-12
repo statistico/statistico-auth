@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker/wait-for-it.sh mysql:3306 -t 90 && bin/console doctrine:migrations:migrate --no-interaction -vvv --query-time
