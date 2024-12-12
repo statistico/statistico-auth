@@ -1,5 +1,0 @@
-#!/bin/bash
-
-php /opt/vendor/bin/phpstan analyse -c /opt/phpstan.neon /opt/src/ -l 7 && \
-    /opt/vendor/bin/phpunit $@
-
